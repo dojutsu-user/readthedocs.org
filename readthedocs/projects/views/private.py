@@ -28,8 +28,7 @@ from readthedocs.core.mixins import ListViewWithForm, LoginRequiredMixin
 from readthedocs.core.utils import broadcast, trigger_build, prepare_build
 from readthedocs.integrations.models import HttpExchange, Integration
 from readthedocs.oauth.services import registry
-from readthedocs.oauth.utils import update_webhook
-from readthedocs.oauth.tasks import attach_webhook
+from readthedocs.oauth.utils import update_webhook, attach_webhook
 from readthedocs.projects import tasks
 from readthedocs.projects.forms import (
     DomainForm, EmailHookForm, IntegrationForm, ProjectAdvancedForm,
@@ -246,7 +245,6 @@ class ImportWizardView(ProjectSpamMixin, PrivateViewMixin, SessionWizardView):
         """Trigger initial build."""
         update_docs = prepare_build(project)
         task_promise = chain(
-            attach_webhook.si(project.pk, self.request.user.pk),
             update_docs,
         )
         async_result = task_promise.apply_async()
@@ -759,8 +757,8 @@ class IntegrationWebhookSync(IntegrationMixin, GenericView):
             # webhook or a remote repository object, the user should be using
             # the per-integration sync instead.
             attach_webhook(
-                project_pk=self.get_project().pk,
-                user_pk=request.user.pk,
+                project=self.get_project(),
+                request=request,
             )
         return HttpResponseRedirect(self.get_success_url())
 
