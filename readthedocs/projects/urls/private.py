@@ -95,6 +95,10 @@ urlpatterns = [
     url(r'^(?P<project_slug>[-\w]+)/advertising/$',
         ProjectAdvertisingUpdate.as_view(),
         name='projects_advertising'),
+
+    url(r'^(?P<project_slug>[-\w]+)/indexing/$',
+        private.project_indexing,
+        name='project_indexing'),
 ]
 
 domain_urls = [

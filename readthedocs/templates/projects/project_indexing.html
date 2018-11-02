@@ -1,0 +1,22 @@
+{% extends "projects/project_edit_base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Project Indexing" %}{% endblock %}
+
+{% block nav-dashboard %} class="active"{% endblock %}
+
+{% block editing-option-edit-proj %}class="active"{% endblock %}
+
+{% block project-indexing-active %}active{% endblock %}
+{% block project_edit_content_header %}{% trans "Indexing" %}{% endblock %}
+
+{% block project_edit_content %}
+  <p class="help_text">
+    {% trans "Reindex all active versions of the project." %}
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <button>Re-index all active versions</button>
+  </form>
+{% endblock %}

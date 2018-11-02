@@ -8,6 +8,7 @@ import logging
 
 from allauth.socialaccount.models import SocialAccount
 from celery import chain
+from django.core import management
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -782,3 +783,12 @@ class ProjectAdvertisingUpdate(PrivateViewMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('projects_advertising', args=[self.object.slug])
+
+
+@login_required
+def project_indexing(request, project_slug):
+    project = get_object_or_404(Project, slug=project_slug)
+    if request.method == 'POST':
+        management.call_command('reindex_elasticsearch', p=project.slug)
+        return render(request, 'projects/project_indexing.html', {'project': project})
+    return render(request, 'projects/project_indexing.html', {'project': project})
