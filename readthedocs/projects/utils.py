@@ -13,6 +13,11 @@ import traceback
 import six
 from builtins import object, open
 from django.conf import settings
+from django.http import Http404
+
+from readthedocs.projects.models import Project
+from readthedocs.builds.models import Version
+from readthedocs.projects import tasks
 
 log = logging.getLogger(__name__)
 
@@ -132,3 +137,30 @@ class DictObj(object):
 
     def __getattr__(self, attr):
         return self.__dict__.get(attr)
+
+
+def reindex_elasticsearch(project_slug, reindex_active=False):
+    project = Project.objects.filter(slug=project_slug)
+    if reindex_active:
+        if project.exists():
+            queryset = Version.objects.filter(project__slug=project_slug, active=True)
+            if not queryset.exists():
+                raise Http404
+            log.info("Building all versions for %s", project)
+        elif getattr(settings, 'INDEX_ONLY_LATEST', True):
+            queryset = queryset.filter(slug=LATEST)
+        
+        for version in queryset:
+            log.info("Reindexing %s", version)
+            try:
+                commit = version.project.vcs_repo(version.slug).commit
+            except:  # noqa
+                # An exception can be thrown here in production, but it's not
+                # documented what the exception here is
+                commit = None
+
+            try:
+                tasks.update_search(version.pk, commit,
+                              delete_non_commit_files=False)
+            except Exception as e:
+                log.exception('Reindex failed for %s, %s', version, e)

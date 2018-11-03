@@ -41,6 +41,7 @@ from readthedocs.projects.models import (
     Domain, EmailHook, Project, ProjectRelationship, WebHook)
 from readthedocs.projects.signals import project_import
 from readthedocs.projects.views.base import ProjectAdminMixin, ProjectSpamMixin
+from readthedocs.projects.utils import reindex_elasticsearch
 
 log = logging.getLogger(__name__)
 
@@ -789,6 +790,5 @@ class ProjectAdvertisingUpdate(PrivateViewMixin, UpdateView):
 def project_indexing(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
-        management.call_command('reindex_elasticsearch', p=project.slug)
-        return render(request, 'projects/project_indexing.html', {'project': project})
+        reindex_elasticsearch(project_slug, reindex_active=True)
     return render(request, 'projects/project_indexing.html', {'project': project})
