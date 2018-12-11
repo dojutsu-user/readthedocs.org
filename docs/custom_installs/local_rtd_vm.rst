@@ -7,6 +7,8 @@ Assumptions and Prerequisites
 * Debian VM provisioned with python 2.7.x
 * All python dependencies and setup tools are installed ::
 
+.. promt:: bash $
+
   $ sudo apt-get install python-setuptools
   $ sudo apt-get install build-essential
   $ sudo apt-get install python-dev
@@ -15,11 +17,15 @@ Assumptions and Prerequisites
 
 * Git ::
 
+.. promt:: bash $
+
   $ sudo apt-get install git
   
 * Git repo is ``git.corp.company.com:git/docs/documentation.git``
 * Source documents are in ``../docs/source``
 * Sphinx ::
+
+.. promt:: bash $
 
   $ sudo pip install sphinx
 
@@ -32,6 +38,8 @@ Install RTD
 ~~~~~~~~~~~
 
 To host your documentation on a local RTD installation, set it up in your VM. ::
+
+.. promt:: bash $
 
     $ mkdir checkouts
     $ cd checkouts
@@ -46,11 +54,15 @@ Possible Error and Resolution
 
 **Resolution**: Run the following commands. ::
 
+.. promt:: bash $
+
     $ sudo apt-get update
     $ sudo apt-get install python2.7-dev tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev libxml2-devel libxslt-devel
     $ sudo apt-get build-dep python-imaging --fix-missing 
 
 On Debian 8 (jessie) the command is slightly different ::
+
+.. promt:: bash $
 
     $ sudo apt-get update
     $ sudo apt-get install python2.7-dev tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev libxml2-dev libxslt-dev
@@ -58,12 +70,16 @@ On Debian 8 (jessie) the command is slightly different ::
 
 Also don't forget to re-run the dependency installation ::
 
+.. promt:: bash $
+
     $ sudo pip install -r requirements.txt
 
 Configure the RTD Server and Superuser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Run the following commands. ::
+
+.. promt:: bash $
 
     $ ./manage.py migrate
     $ ./manage.py createsuperuser
@@ -79,6 +95,8 @@ RTD Server Administration
 
 Navigate to the ``../checkouts/readthedocs.org`` folder in your VM and run the following command. ::
 
+.. promt:: bash $
+
     $ ./manage.py runserver [VM IP ADDRESS]:8000
     $ curl -i http://[VM IP ADDRESS]:8000
 
@@ -91,6 +109,8 @@ Go to the dashboard at  ``http://[VM IP ADDRESS]:8000/dashboard`` and follow the
 2. Clone the documentation sources from Git in the VM.
 3. Navigate to the root path for documentation.
 4. Run the following Sphinx commands. ::
+
+.. promt:: bash $
 
     $ make html
 
@@ -107,12 +127,16 @@ Possible Error and Resolution
 
 1. In your machine, navigate to the ``.ssh`` folder. ::
 
+.. promt:: bash $
+
     $ cd .ssh/ 
     $ cat id_rsa 
 
 2. Copy the entire Private Key.
 3. Now, SSH to the VM.
 4. Open the ``id_rsa`` file in the VM. ::
+
+.. promt:: bash $
 
     $ vim /home/<username>/.ssh/id_rsa
 
@@ -121,6 +145,8 @@ Possible Error and Resolution
 **Workaround 2** 
 
 SSH to the VM using the ``-A`` directive. ::
+
+.. promt:: bash $
 
     $ ssh document-vm -A 
     

@@ -20,13 +20,13 @@ Quick start
 
 Assuming you have Python already, `install MkDocs`_:
 
-.. sourcecode:: bash
+.. promt:: bash $
 
     $ pip install mkdocs
 
 Setup your MkDocs project:
 
-.. sourcecode:: bash
+.. promt:: bash $
 
     $ mkdocs new .
 
@@ -37,7 +37,7 @@ that is the entry point for your documentation.
 You can edit this ``index.md`` file to add more details about your project
 and then you can build your documentation:
 
-.. sourcecode:: bash
+.. promt:: bash $
 
     $ mkdocs serve
 

@@ -51,16 +51,22 @@ you know if there were any problems that is wasn't able to fix automatically.
 
 To run the `pre-commit` command and check your changes::
 
+.. promt:: bash $
+
     $ pip install -U pre-commit
     $ git add <your-modified-files>
     $ pre-commit run
 
 or to run against a specific file::
 
+.. promt:: bash $
+
     $ pre-commit run --files <file.py>
 
 `pre-commit` can also be run as a git pre-commit hook. You can set this up
 with::
+
+.. promt:: bash $
 
     $ pre-commit install
 

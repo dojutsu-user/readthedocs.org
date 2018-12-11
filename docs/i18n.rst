@@ -271,6 +271,8 @@ performance. To compile the latest PO files in the repository, Django provides
 the ``compilemessages`` management command. For example, to compile all the
 available localizations, just run::
 
+.. promt:: bash $
+
     $ python manage.py compilemessages -a
 
 You will need to do this every time you want to push updated translations to
@@ -304,12 +306,12 @@ help pages <http://help.transifex.com/features/client/>`_.
 
    #. Update files and push sources (English) to Transifex:
 
-      .. code-block:: console
+      .. promt:: bash $
 
          $ fab i18n_push_source
 
    #. Pull changes (new translations) from Transifex:
 
-      .. code-block:: console
+      .. promt:: bash $
 
          $ fab i18n_pull

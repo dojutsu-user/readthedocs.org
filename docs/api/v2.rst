@@ -53,7 +53,7 @@ Project list
 
     **Example request**:
 
-    .. sourcecode:: bash
+    .. promt:: bash $
 
         $ curl https://readthedocs.org/api/v2/project/?slug=pip
 
@@ -232,7 +232,7 @@ Build list
 
     **Example request**:
 
-    .. sourcecode:: bash
+    .. promt:: bash $
 
         $ curl https://readthedocs.org/api/v2/build/?project__slug=pip
 

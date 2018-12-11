@@ -31,7 +31,7 @@ Create translatable files
 
 To generate these ``.pot`` files it's needed to run this command from your ``docs/`` directory:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ sphinx-build -b gettext . _build/gettext
 
@@ -57,7 +57,7 @@ We recommend using `sphinx-intl`_ tool for this workflow.
 
 First, you need to install it:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ pip install sphinx-intl
 
@@ -66,7 +66,7 @@ As a second step, we want to create a directory with each translated file per ta
 (in this example we are using Spanish/Argentina and Portuguese/Brazil).
 This can be achieved with the following command:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ sphinx-intl update -p _build/gettext -l es_AR -l pt_BR
 
@@ -113,7 +113,7 @@ To do this, run this command:
 
 .. _transifex-client: https://docs.transifex.com/client/introduction
 
-.. code-block:: console
+.. promt:: bash $
 
    $ pip install transifex-client
 
@@ -126,7 +126,7 @@ This can be done under your `User's Settings`_.
 
 Now, you need to setup it to use this token:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ tx init --token $TOKEN --no-interactive
 
@@ -134,7 +134,7 @@ Now, you need to setup it to use this token:
 The next step is to map every ``.pot`` file you have created in the previous step to a resource under Transifex.
 To achieve this, you need to run this command:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ tx config mapping-bulk \
        --project $TRANSIFEX_PROJECT \
@@ -150,7 +150,7 @@ This command will generate a file at ``.tx/config`` with all the information nee
 Finally, you need to upload these files to Transifex platform so translators can start their work.
 To do this, you can run this command:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ tx push --source
 
@@ -158,7 +158,7 @@ To do this, you can run this command:
 Now, you can go to your Transifex's project and check that there is one resource per ``.rst`` file of your documentation.
 After the source files are translated using Transifex, you can download all the translations for all the languages by running:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ tx pull --all
 
@@ -176,7 +176,7 @@ Build the documentation in target language
 
 Finally, to build our documentation in Spanish(Argentina) we need to tell Sphinx builder the target language with the following command:
 
-.. code-block:: console
+.. promt:: bash $
 
    $ sphinx-build -b html -D language=es_AR . _build/html/es_AR
 
@@ -197,7 +197,7 @@ Once you have done changes in your documentation, you may want to make these add
 
 #. Create the ``.pot`` files:
 
-   .. code-block:: console
+   .. promt:: bash $
 
       $ sphinx-build -b gettext . _build/gettext
 
@@ -209,7 +209,7 @@ Once you have done changes in your documentation, you may want to make these add
 
 #. Push new files to Transifex
 
-   .. code-block:: console
+   .. promt:: bash $
 
       $ tx push --sources
 
@@ -221,13 +221,13 @@ When translators have finished their job, you may want to update the documentati
 
 #. Pull up to date translations from Transifex:
 
-   .. code-block:: console
+   .. promt:: bash $
 
       $ tx pull --all
 
 #. Commit and push these changes to our repo
 
-   .. code-block:: console
+   .. promt:: bash $
 
       $ git add locale/
       $ git commit -m "Update translations"

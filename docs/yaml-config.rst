@@ -278,7 +278,7 @@ installed in addition to the default ``requests`` and ``simplejson``, use the
 
 Behind the scene the following Pip command will be run:
 
-.. code-block:: shell
+.. promt:: bash $
 
     $ pip install .[tests,docs]
 
