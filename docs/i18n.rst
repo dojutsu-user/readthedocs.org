@@ -306,12 +306,12 @@ help pages <http://help.transifex.com/features/client/>`_.
 
    #. Update files and push sources (English) to Transifex:
 
-      .. promt:: bash $
+    .. promt:: bash $
 
-         $ fab i18n_push_source
+        $ fab i18n_push_source
 
    #. Pull changes (new translations) from Transifex:
 
-      .. promt:: bash $
+    .. promt:: bash $
 
-         $ fab i18n_pull
+        $ fab i18n_pull
