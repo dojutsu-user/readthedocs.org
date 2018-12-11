@@ -9,17 +9,17 @@ Assumptions and Prerequisites
 
 .. promt:: bash $
 
-  $ sudo apt-get install python-setuptools
-  $ sudo apt-get install build-essential
-  $ sudo apt-get install python-dev
-  $ sudo apt-get install libevent-dev
-  $ sudo easy_install pip 
+    $ sudo apt-get install python-setuptools
+    $ sudo apt-get install build-essential
+    $ sudo apt-get install python-dev
+    $ sudo apt-get install libevent-dev
+    $ sudo easy_install pip
 
 * Git ::
 
 .. promt:: bash $
 
-  $ sudo apt-get install git
+    $ sudo apt-get install git
   
 * Git repo is ``git.corp.company.com:git/docs/documentation.git``
 * Source documents are in ``../docs/source``
@@ -27,7 +27,7 @@ Assumptions and Prerequisites
 
 .. promt:: bash $
 
-  $ sudo pip install sphinx
+    $ sudo pip install sphinx
 
 .. note:: Not using sudo may prevent access. “error: could not create '/usr/local/lib/python2.7/dist-packages/markupsafe': Permission denied” 
 
