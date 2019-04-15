@@ -27,7 +27,7 @@ from readthedocs.restapi.client import api
 
 from ..base import BaseBuilder, restoring_chdir
 from ..constants import PDF_RE
-from ..environments import BuildCommand, DockerBuildCommand
+from ..environments import Command, DockerBuildCommand
 from ..exceptions import BuildEnvironmentError
 from ..signals import finalize_sphinx_context_data
 
@@ -341,7 +341,7 @@ class EpubBuilder(BaseSphinx):
             )
 
 
-class LatexBuildCommand(BuildCommand):
+class LatexBuildCommand(Command):
 
     """Ignore LaTeX exit code if there was file output."""
 

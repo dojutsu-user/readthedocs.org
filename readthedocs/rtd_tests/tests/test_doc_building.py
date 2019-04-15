@@ -23,7 +23,7 @@ from readthedocs.builds.constants import BUILD_STATE_CLONING
 from readthedocs.builds.models import Version
 from readthedocs.doc_builder.config import load_yaml_config
 from readthedocs.doc_builder.environments import (
-    BuildCommand,
+    Command,
     DockerBuildCommand,
     DockerBuildEnvironment,
     LocalBuildEnvironment,
@@ -1007,17 +1007,17 @@ class TestBuildCommand(TestCase):
     def test_command_env(self):
         """Test build command env vars."""
         env = {'FOOBAR': 'foobar', 'BIN_PATH': 'foobar'}
-        cmd = BuildCommand('echo', environment=env)
+        cmd = Command('echo', environment=env)
         for key in list(env.keys()):
             self.assertEqual(cmd.environment[key], env[key])
 
     def test_result(self):
         """Test result of output using unix true/false commands."""
-        cmd = BuildCommand('true')
+        cmd = Command('true')
         cmd.run()
         self.assertTrue(cmd.successful)
 
-        cmd = BuildCommand('false')
+        cmd = Command('false')
         cmd.run()
         self.assertTrue(cmd.failed)
 
@@ -1025,25 +1025,25 @@ class TestBuildCommand(TestCase):
         """Test missing command."""
         path = os.path.join('non-existant', str(uuid.uuid4()))
         self.assertFalse(os.path.exists(path))
-        cmd = BuildCommand(path)
+        cmd = Command(path)
         cmd.run()
         missing_re = re.compile(r'(?:No such file or directory|not found)')
         self.assertRegex(cmd.error, missing_re)
 
     def test_input(self):
         """Test input to command."""
-        cmd = BuildCommand('/bin/cat', input_data='FOOBAR')
+        cmd = Command('/bin/cat', input_data='FOOBAR')
         cmd.run()
         self.assertEqual(cmd.output, 'FOOBAR')
 
     def test_output(self):
         """Test output command."""
-        cmd = BuildCommand(['/bin/bash', '-c', 'echo -n FOOBAR'])
+        cmd = Command(['/bin/bash', '-c', 'echo -n FOOBAR'])
 
-        # Mock BuildCommand.sanitized_output just to count the amount of calls,
+        # Mock Command.sanitized_output just to count the amount of calls,
         # but use the original method to behaves as real
         original_sanitized_output = cmd.sanitize_output
-        with patch('readthedocs.doc_builder.environments.BuildCommand.sanitize_output') as sanitize_output:  # noqa
+        with patch('readthedocs.doc_builder.environments.Command.sanitize_output') as sanitize_output:  # noqa
             sanitize_output.side_effect = original_sanitized_output
             cmd.run()
             self.assertEqual(cmd.output, 'FOOBAR')
@@ -1054,12 +1054,12 @@ class TestBuildCommand(TestCase):
     def test_error_output(self):
         """Test error output from command."""
         # Test default combined output/error streams
-        cmd = BuildCommand(['/bin/bash', '-c', 'echo -n FOOBAR 1>&2'])
+        cmd = Command(['/bin/bash', '-c', 'echo -n FOOBAR 1>&2'])
         cmd.run()
         self.assertEqual(cmd.output, 'FOOBAR')
         self.assertIsNone(cmd.error)
         # Test non-combined streams
-        cmd = BuildCommand(
+        cmd = Command(
             ['/bin/bash', '-c', 'echo -n FOOBAR 1>&2'],
             combine_output=False,
         )
@@ -1068,7 +1068,7 @@ class TestBuildCommand(TestCase):
         self.assertEqual(cmd.error, 'FOOBAR')
 
     def test_sanitize_output(self):
-        cmd = BuildCommand(['/bin/bash', '-c', 'echo'])
+        cmd = Command(['/bin/bash', '-c', 'echo'])
         checks = (
             (b'Hola', 'Hola'),
             (b'H\x00i', 'Hi'),
@@ -1085,7 +1085,7 @@ class TestBuildCommand(TestCase):
         })
         mock_subprocess.return_value = mock_process
 
-        cmd = BuildCommand(['echo', 'test'], cwd='/tmp/foobar')
+        cmd = Command(['echo', 'test'], cwd='/tmp/foobar')
         cmd.run()
         self.assertEqual(
             cmd.output,

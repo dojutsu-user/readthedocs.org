@@ -54,7 +54,7 @@ log = logging.getLogger(__name__)
 
 __all__ = (
     'api_v2',
-    'BuildCommand',
+    'Command',
     'DockerBuildCommand',
     'LocalEnvironment',
     'LocalBuildEnvironment',
@@ -62,7 +62,7 @@ __all__ = (
 )
 
 
-class BuildCommand(BuildCommandResultMixin):
+class Command(BuildCommandResultMixin):
 
     """
     Wrap command execution for execution in build environments.
@@ -289,7 +289,7 @@ class BuildCommand(BuildCommandResultMixin):
             log.debug('Post response via JSON encoded data: %s', resp)
 
 
-class DockerBuildCommand(BuildCommand):
+class DockerBuildCommand(Command):
 
     """
     Create a docker container and run a command inside the container.
@@ -428,7 +428,7 @@ class BaseEnvironment:
         if record_as_success:
             record = True
             warn_only = True
-            # ``record_as_success`` is needed to instantiate the BuildCommand
+            # ``record_as_success`` is needed to instantiate the Command
             kwargs.update({'record_as_success': record_as_success})
 
         # Remove PATH from env, and set it to bin_path if it isn't passed in
@@ -446,7 +446,7 @@ class BaseEnvironment:
 
         if record:
             # TODO: I don't like how it's handled this entry point here since
-            # this class should know nothing about a BuildCommand (which are the
+            # this class should know nothing about a Command (which are the
             # only ones that can be saved/recorded)
             self.record_command(build_cmd)
 
@@ -477,8 +477,7 @@ class BaseEnvironment:
 
 class LocalEnvironment(BaseEnvironment):
 
-    # TODO: BuildCommand name doesn't make sense here, should be just Command
-    command_class = BuildCommand
+    command_class = Command
 
 
 class BuildEnvironment(BaseEnvironment):
@@ -747,7 +746,7 @@ class LocalBuildEnvironment(BuildEnvironment):
 
     """Local execution build environment."""
 
-    command_class = BuildCommand
+    command_class = Command
 
 
 class DockerBuildEnvironment(BuildEnvironment):
