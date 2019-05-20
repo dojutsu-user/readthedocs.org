@@ -105,9 +105,21 @@ class PageDocument(DocType):
     path = fields.KeywordField(attr='processed_json.path')
 
     # Searchable content
-    title = fields.TextField(attr='processed_json.title')
+    title = fields.TextField(attr='processed_json.title', fields={
+                                                            'autocomplete': {
+                                                                'type': 'text', 
+                                                                'analyzer': 'autocomplete',
+                                                                'search_analyzer': 'autocomplete_search'
+                                                            }
+                                                        })
     headers = fields.TextField(attr='processed_json.headers')
-    content = fields.TextField(attr='processed_json.content')
+    content = fields.TextField(attr='processed_json.content', fields={
+                                                            'autocomplete': {
+                                                                'type': 'text',
+                                                                'analyzer': 'autocomplete',
+                                                                'search_analyzer': 'autocomplete_search'
+                                                            }
+                                                        })
 
     modified_model_field = 'modified_date'
 

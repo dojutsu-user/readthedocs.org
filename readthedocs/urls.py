@@ -18,7 +18,7 @@ from readthedocs.core.views import (
     server_error_500,
 )
 from readthedocs.search import views as search_views
-from readthedocs.search.api import PageSearchAPIView
+from readthedocs.search.api import PageSearchAPIView, auto
 
 
 admin.autodiscover()
@@ -38,6 +38,7 @@ basic_urls = [
 ]
 
 rtd_urls = [
+    url(r'^search/auto/$', auto, name='search_auto'),
     url(r'^search/$', search_views.elastic_search, name='search'),
     url(r'^dashboard/', include('readthedocs.projects.urls.private')),
     url(r'^profiles/', include('readthedocs.profiles.urls.public')),

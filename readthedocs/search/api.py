@@ -1,6 +1,8 @@
 import logging
 from pprint import pformat
 
+from elasticsearch import Elasticsearch
+from elasticsearch_dsl import Search
 from rest_framework import generics
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -140,3 +142,60 @@ class PageSearchAPIView(generics.ListAPIView):
         for project in all_projects:
             projects_url[project.slug] = project.get_docs_url(version_slug=version_slug)
         return projects_url
+
+
+def auto(request):
+    client = Elasticsearch()
+    s = Search(using=client, index='page_index')
+    # s = s.source(['title', 'path'])
+    s = s.update_from_dict(
+        {
+        "size": 5,
+        "_source": [
+            "title",
+            "path"
+        ],
+        "query": {
+            "bool": {
+            "must": {
+                "multi_match": {
+                "query": request.GET.get('q'),
+                "fields": [
+                    "title.autocomplete^20",
+                    "content.autocomplete"
+                ],
+                "type": "best_fields",
+                "fuzziness": "AUTO"
+                }
+            },
+            "filter": {
+                "bool": {
+                "must": [
+                    {
+                    "term": {
+                        "project": "rtd-test"
+                    }
+                    },
+                    {
+                    "term": {
+                        "version": "latest"
+                    }
+                    }
+                ]
+                }
+            }
+            }
+        },
+        "highlight": {
+            "number_of_fragments": 1,
+            "tags_schema": "styled",
+            "fragment_size": 200,
+            "fields": {
+            "title.autocomplete": {},
+            "content.autocomplete": {}
+            }
+        }
+        }
+    )
+    from django.http import JsonResponse
+    return JsonResponse(s[:5].execute().to_dict())

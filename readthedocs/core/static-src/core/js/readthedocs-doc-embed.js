@@ -5,6 +5,7 @@ var footer = require('./doc-embed/footer.js');
 var rtddata = require('./doc-embed/rtd-data');
 var sphinx = require('./doc-embed/sphinx');
 var search = require('./doc-embed/search');
+var docSearch = require('./doc-embed/doc-search-autocomplete');
 
 // Adds the $.inViewport function
 $.extend(require('verge'));
@@ -17,4 +18,5 @@ $(document).ready(function () {
     // mkdocs.init();
     search.init();
     sponsorship.init();
+    docSearch.init();
 });

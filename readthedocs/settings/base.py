@@ -444,6 +444,29 @@ class CommunityBaseSettings(Settings):
                 'number_of_replicas': 0,
                 "index": {
                     "sort.field": ["project", "version"]
+                },
+                'analysis': {
+                    'analyzer': {
+                        'autocomplete': {
+                            'tokenizer': 'autocomplete',
+                            'filter': [
+                                'lowercase'
+                            ]
+                        },
+                        'autocomplete_search': {
+                            'tokenizer': 'lowercase'
+                        }
+                    },
+                    'tokenizer': {
+                        'autocomplete': {
+                            'type': 'edge_ngram',
+                            'min_gram': 1,
+                            'max_gram': 30,
+                            'token_chars': [
+                                'letter'
+                            ]
+                        }
+                    }
                 }
             }
         },
