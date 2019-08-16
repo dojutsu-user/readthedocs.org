@@ -1,5 +1,5 @@
-Read the Docs: Documentation Simplified
-=======================================
+Python Requests: HTTP For Humans
+================================
 
 .. meta::
    :description lang=en: Automate building, versioning, and hosting of your technical documentation continuously on Read the Docs.
