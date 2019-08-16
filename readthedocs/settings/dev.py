@@ -51,7 +51,7 @@ class CommunityDevSettings(CommunityBaseSettings):
     )
 
     # Disable auto syncing elasticsearch documents in development
-    ELASTICSEARCH_DSL_AUTOSYNC = False
+    ELASTICSEARCH_DSL_AUTOSYNC = True
 
     # Disable password validators on development
     AUTH_PASSWORD_VALIDATORS = []
