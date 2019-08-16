@@ -156,7 +156,6 @@ of Read the Docs and the larger software documentation ecosystem.
 
 * **Getting involved with Read the Docs**:
   :doc:`Contributing <contribute>` |
-  :doc:`roadmap` |
   :doc:`gsoc` |
   :doc:`Code of conduct <code-of-conduct>`
 
@@ -189,7 +188,6 @@ of Read the Docs and the larger software documentation ecosystem.
    :caption: About Read the Docs
 
    contribute
-   roadmap
    gsoc
    code-of-conduct
 
