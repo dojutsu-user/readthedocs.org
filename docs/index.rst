@@ -1,5 +1,5 @@
-Python Requests: HTTP For Humans
-================================
+Read the Docs: Documentation Simplified
+=======================================
 
 .. meta::
    :description lang=en: Automate building, versioning, and hosting of your technical documentation continuously on Read the Docs.
@@ -156,6 +156,8 @@ of Read the Docs and the larger software documentation ecosystem.
 
 * **Getting involved with Read the Docs**:
   :doc:`Contributing <contribute>` |
+  :doc:`roadmap` |
+  :doc:`gsoc` |
   :doc:`Code of conduct <code-of-conduct>`
 
 * **Policies & Process**:
@@ -187,6 +189,8 @@ of Read the Docs and the larger software documentation ecosystem.
    :caption: About Read the Docs
 
    contribute
+   roadmap
+   gsoc
    code-of-conduct
 
    security
